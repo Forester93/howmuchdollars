@@ -14,6 +14,30 @@ fetch("/api/transaction")
     populateChart();
   });
 
+function handleDelete(e) {
+  console.log(e);
+
+  if (e.target.matches(".del-btn")) {
+    element = e.target;
+    let transaction = JSON.parse(element.getAttribute("data"));
+    fetch("/api/transaction/" + transaction._id, {
+      method: "delete",
+    })
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(
+            "Looks like there was a problem. Status Code: " + response.status
+          );
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(function (err) {
+        alert("Error. Check your connectivity!");
+      });
+  }
+}
+
 function populateTotal() {
   // reduce transaction amounts to a single total value
   let total = transactions.reduce((total, t) => {
@@ -31,16 +55,21 @@ function populateTable() {
   transactions.forEach((transaction) => {
     // create and populate a table row
     let tr = document.createElement("tr");
+    let delBtn = document.createElement("button");
+    delBtn.classList =
+      "btn-danger align-self-end rounded-pill border-0 del-btn";
+    delBtn.setAttribute("data", JSON.stringify(transaction));
+    delBtn.textContent = "💀";
+    delBtn.addEventListener("click", handleDelete);
+    let btnParent = document.createElement("td");
+    btnParent.classList = "bg-white border-0";
+    btnParent.appendChild(delBtn);
     tr.innerHTML = `
       <td>${transaction.name}</td>
       <td>${transaction.value}
       </td>
-      <td class="bg-white border-0">
-      <button class=" btn-danger align-self-end rounded-pill border-0" style="width:40%" data="${transaction._id}">💀</button>
-      </td>
-
     `;
-
+    tr.appendChild(btnParent);
     tbody.appendChild(tr);
   });
 }

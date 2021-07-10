@@ -89,5 +89,15 @@ const saveRecord = (record) => {
   store.add(record);
 };
 
+// const deleteRecord = (record) => {
+//   console.log("Delete record invoked");
+//   //Create a transaction with read/write access
+//   const transaction = db.transaction(["BudgetStore"], "readwrite");
+
+//   //access BudgetStore
+//   const store = transaction.objectStore("BudgetStore");
+//   store.delete(record);
+// };
+
 // Listen for app coming back online
 window.addEventListener("online", checkDatabase);
