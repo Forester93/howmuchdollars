@@ -12,7 +12,7 @@
 
 ## Description
 
-Light-weight application to seamlessly track your expenditures progressively.
+Light-weight PWA application  that you can install to your phone or desktop to seamlessly track your expenditures progressively.
 
 ### Technologies
 
